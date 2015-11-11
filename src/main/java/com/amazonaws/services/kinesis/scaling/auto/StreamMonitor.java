@@ -305,14 +305,16 @@ public class StreamMonitor implements Runnable {
 					report = this.scaler.scaleUp(this.config.getStreamName(),
 
 					scaleUpCount, this.config.getMinShards(),
-							this.config.getMaxShards());
+							this.config.getMaxShards(),
+							this.config.getMaxRetries());
 				} else {
 					report = this.scaler
 							.scaleUp(this.config.getStreamName(),
 									new Double(this.config.getScaleUp()
 											.getScalePct()) / 100, this.config
 											.getMinShards(), this.config
-											.getMaxShards());
+											.getMaxShards(),
+									this.config.getMaxRetries());
 
 				}
 			} else if (aggregatedScaleDirection.equals(ScaleDirection.DOWN)) {
@@ -345,13 +347,15 @@ public class StreamMonitor implements Runnable {
 							report = this.scaler.scaleDown(
 									this.config.getStreamName(),
 									scaleDownCount, this.config.getMinShards(),
-									this.config.getMaxShards());
+									this.config.getMaxShards(),
+									this.config.getMaxRetries());
 						} else {
 							report = this.scaler.scaleDown(this.config
 									.getStreamName(), new Double(this.config
 									.getScaleDown().getScalePct()) / 100,
 									this.config.getMinShards(), this.config
-											.getMaxShards());
+											.getMaxShards(),
+									this.config.getMaxRetries());
 						}
 
 						lastScaleDown = new DateTime(System.currentTimeMillis());

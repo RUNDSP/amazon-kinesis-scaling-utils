@@ -20,6 +20,7 @@ min-shards - The minimum number of shards to maintain
 max-shards - The maximum number of shards which will cap the scaling operation
 region - The Region where the Stream exists, such as us-east-1 or eu-west-1 (default us-east-1)
 shard-id - The Shard which you want to target for Scaling. NOTE: This will create imbalanced partitioning of the Keyspace
+max-retries - The maximum number of retries for a modify operation (default 10)
 ```
 
 You can also integrate the StreamScaler class with existing control systems.

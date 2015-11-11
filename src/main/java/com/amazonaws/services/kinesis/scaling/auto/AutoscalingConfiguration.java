@@ -59,6 +59,8 @@ public class AutoscalingConfiguration implements Serializable {
 
 	private Integer maxShards;
 
+	private Integer maxRetries = 10;
+
 	private Integer refreshShardsNumberAfterMin = 10;
 
 	private IScalingOperationReportListener scalingOperationReportListener;
@@ -118,6 +120,14 @@ public class AutoscalingConfiguration implements Serializable {
 
 	public void setMaxShards(Integer maxShards) {
 		this.maxShards = maxShards;
+	}
+
+	public Integer getMaxRetries() {
+		return maxRetries;
+	}
+
+	public void setMaxRetries(Integer maxRetries) {
+		this.maxRetries = maxRetries;
 	}
 
 	public Integer getRefreshShardsNumberAfterMin() {

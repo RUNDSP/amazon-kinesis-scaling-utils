@@ -72,6 +72,8 @@ public class ScalingClient {
 
 	public static final String MAX_SHARDS_PARAM = "max-shards";
 
+	public static final String MAX_RETRIES_PARAM = "max-retries";
+
 	private String streamName;
 
 	private String shardId;
@@ -87,6 +89,8 @@ public class ScalingClient {
 	private Integer minShards;
 
 	private Integer maxShards;
+
+	private Integer maxRetries = 10;
 
 	private void loadParams() throws Exception {
 		if (System.getProperty(STREAM_PARAM) == null) {
@@ -115,6 +119,10 @@ public class ScalingClient {
 		if (System.getProperty(REGION_PARAM) != null) {
 			this.region = Region.getRegion(Regions.fromName(System
 					.getProperty(REGION_PARAM)));
+		}
+
+		if (System.getProperty(MAX_RETRIES_PARAM) != null) {
+			this.maxRetries = Integer.parseInt(System.getProperty(MAX_RETRIES_PARAM));
 		}
 
 		if (this.scalingAction != ScalingAction.report) {
@@ -173,11 +181,11 @@ public class ScalingClient {
 				switch (this.scaleBy) {
 				case count:
 					report = scaler.scaleUp(this.streamName, this.scaleCount,
-							this.minShards, this.maxShards);
+							this.minShards, this.maxShards, this.maxRetries);
 					break;
 				case pct:
 					report = scaler.scaleUp(this.streamName, this.scalePct,
-							this.minShards, this.maxShards);
+							this.minShards, this.maxShards, this.maxRetries);
 					break;
 				}
 				break;
@@ -185,11 +193,11 @@ public class ScalingClient {
 				switch (this.scaleBy) {
 				case count:
 					report = scaler.scaleDown(this.streamName, this.scaleCount,
-							this.minShards, this.maxShards);
+							this.minShards, this.maxShards, this.maxRetries);
 					break;
 				case pct:
 					report = scaler.scaleDown(this.streamName, this.scalePct,
-							this.minShards, this.maxShards);
+							this.minShards, this.maxShards, this.maxRetries);
 					break;
 				}
 				break;
@@ -197,7 +205,7 @@ public class ScalingClient {
 				switch (this.scaleBy) {
 				case count:
 					report = scaler.resize(this.streamName, this.scaleCount,
-							this.minShards, this.maxShards);
+							this.minShards, this.maxShards, this.maxRetries);
 					break;
 				case pct:
 					throw new Exception("Cannot resize by a Percentage");
